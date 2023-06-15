@@ -13,7 +13,7 @@ namespace Oxylus {
 
   Application* CreateApplication(const ApplicationCommandLineArgs args) {
     AppSpec spec;
-    spec.Name = "OxylusRuntime";
+    spec.Name = "OxArena";
     spec.WorkingDirectory = std::filesystem::current_path().string();
     spec.CommandLineArgs = args;
     spec.CustomWindowTitle = false;

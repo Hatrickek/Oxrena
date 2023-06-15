@@ -1,0 +1,116 @@
+Scene: main.oxscene
+Entities:
+  - Entity: 9252851180101849158
+    TagComponent:
+      Tag: Sky Light
+    RelationshipComponent:
+      Parent: 0
+      ChildCount: 0
+      Children: []
+    TransformComponent:
+      Translation: [0,0,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    SkyLightComponent:
+      ImagePath: Assets\Hdrs\industrial_sky.ktx2
+      CubemapLodBias: 0
+  - Entity: 5379280148746968
+    TagComponent:
+      Tag: Camera
+    RelationshipComponent:
+      Parent: 0
+      ChildCount: 0
+      Children: []
+    TransformComponent:
+      Translation: [0,1.9772553,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      FOV: 90
+      NearClip: 0.01
+      FarClip: 1000
+  - Entity: 1465355527874988779
+    TagComponent:
+      Tag: Character Controller
+    RelationshipComponent:
+      Parent: 0
+      ChildCount: 0
+      Children: []
+    TransformComponent:
+      Translation: [0,1.2654663,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CharacterControllerComponent:
+      CharacterHeightStanding: 1.35
+      CharacterRadiusStanding: 0.3
+      CharacterRadiusCrouching: 0.3
+      CharacterHeightCrouching: 0.8
+      ControlMovementDuringJump: 1
+      JumpForce: 6
+      Friction: 6
+      CollisionTolerance: 0.05
+  - Entity: 6060516771435436172
+    TagComponent:
+      Tag: Plane
+    RelationshipComponent:
+      Parent: 0
+      ChildCount: 0
+      Children: []
+    TransformComponent:
+      Translation: [0,0,0.1]
+      Rotation: [0,0,0]
+      Scale: [100,0.2,100]
+    MeshRendererComponent:
+      Mesh: Resources/Objects/plane.gltf
+      SubmeshIndex: 0
+    MaterialComponent:
+      Path: Assets\Textures\PrototypeMaterial.oxmat
+    RigidbodyComponent:
+      Type: 0
+      Mass: 1
+      LinearDrag: 0
+      AngularDrag: 0.05
+      GravityScale: 1
+      AllowSleep: 1
+      Awake: 1
+      Continuous: 0
+      Interpolation: 1
+      IsSensor: 0
+    BoxColliderComponent:
+      Size: [100,0.1,100]
+      Offset: [0,0,0]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+  - Entity: 16389580241612296778
+    TagComponent:
+      Tag: Cube
+    RelationshipComponent:
+      Parent: 0
+      ChildCount: 0
+      Children: []
+    TransformComponent:
+      Translation: [-14.715175,1.8862822,0]
+      Rotation: [0,0,0]
+      Scale: [1.6,4,20]
+    MeshRendererComponent:
+      Mesh: Resources/Objects/cube.glb
+      SubmeshIndex: 0
+    MaterialComponent: {}
+    RigidbodyComponent:
+      Type: 0
+      Mass: 1
+      LinearDrag: 0
+      AngularDrag: 0.05
+      GravityScale: 1
+      AllowSleep: 1
+      Awake: 1
+      Continuous: 0
+      Interpolation: 1
+      IsSensor: 0
+    BoxColliderComponent:
+      Size: [0.8,2,10]
+      Offset: [0,0,0]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0

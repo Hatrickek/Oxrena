@@ -6,8 +6,6 @@
 
 #include "Scene/Scene.h"
 
-constexpr auto ProjectPath = "SandboxProject";
-
 namespace OxylusRuntime {
   class RuntimeLayer : public Oxylus::Layer {
   public:
@@ -21,7 +19,7 @@ namespace OxylusRuntime {
     static RuntimeLayer* Get() { return s_Instance; }
 
     static std::string GetAssetsPath(const std::string_view path) {
-      return (std::filesystem::path(ProjectPath) / "Assets" / path).string();
+      return ("Assets" / std::filesystem::path(path)).string();
     }
 
   private:

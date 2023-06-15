@@ -1,0 +1,54 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Additional Files/Folders
+/.vs
+/.vscode
+/.idea
+/cmake-build-debug
+/cmake-build-dist
+/cmake-build-release
+/bin
+/bin-int
+/.cache
+/OxylusEditor/Resources/Shaders/Compiled
+/OxylusEditor/logs
+*.ccls
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.DotSettings.user
+build
+Build
+*.sln
+*.sln.DotSettings.user
+.editorconfig
+CMakeSettings.json

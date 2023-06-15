@@ -1,0 +1,19 @@
+Material: PrototypeMaterial
+Parameters:
+  Roughness: 1
+  Metallic: 0
+  Specular: 0
+  Normal: 1
+  AO: 1
+  Color: [1,1,1,1]
+  UseAlbedo: 1
+  UseRoughness: 0
+  UseMetallic: 0
+  UseNormal: 0
+  UseAO: 0
+  UseEmissive: 0
+  UseSpecular: 0
+  FlipImage: 0
+  UVScale: 100
+Textures:
+  Albedo: Assets\Textures\PrototypeTexture.jpg
