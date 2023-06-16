@@ -5,7 +5,7 @@
 #include "Core/Input.h"
 #include "Scene/Scene.h"
 #include "Utils/OxMath.h"
-#include "Utils/Timestep.h"
+#include "Utils/TimeStep.h"
 
 namespace OxylusRuntime {
   using namespace Oxylus;
