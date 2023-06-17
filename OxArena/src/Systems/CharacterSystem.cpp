@@ -95,7 +95,7 @@ namespace OxylusRuntime {
 
           const Vec2 change = (newMousePosition - s_LockedMousePosition) * (s_MouseSensitivity / 1000.0f);
           finalYawPitch.x += change.x;
-          finalYawPitch.y = glm::clamp(finalYawPitch.y - change.y, -89.0f, 89.9f);
+          finalYawPitch.y = finalYawPitch.y - change.y;
         }
         else {
           s_UsingCamera = false;
@@ -108,7 +108,7 @@ namespace OxylusRuntime {
         finalPosition.y += chComponent.CharacterHeightStanding;
 
         cameraTransform.Translation = finalPosition;
-        cameraTransform.Rotation.x = finalYawPitch.y;
+        cameraTransform.Rotation.x = glm::clamp(finalYawPitch.y, glm::radians(-89.0f), glm::radians(89.0f));
         cameraTransform.Rotation.y = finalYawPitch.x;
         
         // Cancel movement in opposite direction of normal when touching something we can't walk up
