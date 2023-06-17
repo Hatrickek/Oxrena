@@ -132,7 +132,16 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS_DISTRIBUTION ${CMAKE_EXE_LINKER_FLAGS})
 endif()
 
+include(FetchContent)
+
 # Link with oxylus.
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    Oxylus
+FetchContent_Declare(
+  Oxylus
+  GIT_REPOSITORY https://github.com/Hatrickek/Oxylus-Engine.git
+  GIT_TAG main
+  SOURCE_SUBDIR "Oxylus"
 )
+FetchContent_MakeAvailable(Oxylus)
+set(SHADERC_FROM_SOURCE TRUE)
+target_link_libraries(${PROJECT_NAME} PRIVATE Oxylus)
+target_include_directories(${PROJECT_NAME} PUBLIC ${Oxylus_SOURCE_DIR}/Oxylus/src)

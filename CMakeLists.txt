@@ -35,6 +35,5 @@ if (ENABLE_ASAN)
 endif()
 
 # Sub-projects
-add_subdirectory(Oxylus-Engine/Oxylus)
 add_subdirectory(OxArena)
 
