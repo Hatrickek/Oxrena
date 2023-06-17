@@ -43,7 +43,7 @@ namespace OxylusRuntime {
                                               ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
     constexpr float PAD = 10.0f;
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
-    const ImVec2 work_pos = viewport->WorkPos; // Use work area to avoid menu-bar/task-bar, if any!
+    const ImVec2 work_pos = viewport->WorkPos; 
     ImVec2 window_pos;
     window_pos.x = (work_pos.x + PAD);
     window_pos.y = work_pos.y + PAD;

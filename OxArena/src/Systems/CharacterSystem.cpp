@@ -1,4 +1,4 @@
-﻿#include "CharacterSystem.h"
+#include "CharacterSystem.h"
 
 #include "Core/Components.h"
 #include "Scene/Scene.h"
@@ -82,7 +82,7 @@ namespace OxylusRuntime {
         if (ImGui::IsKeyPressed(ImGuiKey_Escape, false))
           s_LockCamera = !s_LockCamera;
 
-        if (s_LockCamera) {
+        if (s_LockCamera && Window::IsFocused()) {
           ImGui::SetMouseCursor(ImGuiMouseCursor_None);
           const Vec2 newMousePosition = Input::GetMousePosition();
 
