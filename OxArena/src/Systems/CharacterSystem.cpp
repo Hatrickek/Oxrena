@@ -1,5 +1,6 @@
 #include "CharacterSystem.h"
 
+#include "RuntimeLayer.h"
 #include "Core/Components.h"
 #include "Scene/Scene.h"
 #include "UI/IGUI.h"
@@ -24,6 +25,11 @@ namespace OxylusRuntime {
     auto& registery = scene->m_Registry;
     const auto characterView = registery.view<TransformComponent, CharacterControllerComponent>();
     const auto cameraView = registery.view<TransformComponent, CameraComponent>();
+
+    if (RuntimeLayer::Get()->m_BlockingPlayerInput) {
+      s_LockCamera = false;
+      return;
+    }
 
     for (const auto cameraEntity : cameraView) {
       auto&& [cameraTransform, cameraComponent] = cameraView.get<TransformComponent, CameraComponent>(cameraEntity);
@@ -81,7 +87,7 @@ namespace OxylusRuntime {
 
         if (ImGui::IsKeyPressed(ImGuiKey_Escape, false))
           s_LockCamera = !s_LockCamera;
-
+        
         if (s_LockCamera && Window::IsFocused()) {
           ImGui::SetMouseCursor(ImGuiMouseCursor_None);
           const Vec2 newMousePosition = Input::GetMousePosition();
@@ -110,7 +116,7 @@ namespace OxylusRuntime {
         cameraTransform.Translation = finalPosition;
         cameraTransform.Rotation.x = glm::clamp(finalYawPitch.y, glm::radians(-89.0f), glm::radians(89.0f));
         cameraTransform.Rotation.y = finalYawPitch.x;
-        
+
         // Cancel movement in opposite direction of normal when touching something we can't walk up
         const JPH::Character::EGroundState groundState = chComponent.Character->GetGroundState();
         if (groundState == JPH::Character::EGroundState::OnSteepGround || groundState == JPH::Character::EGroundState::NotSupported) {
@@ -132,7 +138,7 @@ namespace OxylusRuntime {
     const auto characterView = registery.view<TransformComponent, CharacterControllerComponent>();
     for (const auto entity : characterView) {
       auto&& [transform, component] = characterView.get<TransformComponent, CharacterControllerComponent>(entity);
-      
+
       if (ImGui::Begin("Character Debug")) {
         IGUI::BeginProperties();
         IGUI::PropertyVector("Position", transform.Translation);

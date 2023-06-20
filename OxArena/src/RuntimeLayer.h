@@ -5,10 +5,13 @@
 #include "Core/Systems/HotReloadableScenes.h"
 
 #include "Scene/Scene.h"
+#include "UI/RuntimeConsole.h"
 
 namespace OxylusRuntime {
   class RuntimeLayer : public Oxylus::Layer {
   public:
+    bool m_BlockingPlayerInput = false;
+
     RuntimeLayer();
     ~RuntimeLayer() override;
     void OnAttach(Oxylus::EventDispatcher& dispatcher) override;
@@ -26,10 +29,17 @@ namespace OxylusRuntime {
     void LoadScene();
     bool OnSceneReload(Oxylus::ReloadSceneEvent& e);
     void RenderFinalImage() const;
+    void DrawRuntimeConsole();
 
   private:
-    Oxylus::EventDispatcher m_Dispatcher;
     static RuntimeLayer* s_Instance;
+
+    Oxylus::EventDispatcher m_Dispatcher;
+
+    // Scene
     Oxylus::Ref<Oxylus::Scene> m_Scene;
+
+    //UI
+    Oxylus::RuntimeConsole m_RuntimeConsole;
   };
 }

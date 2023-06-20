@@ -91,7 +91,7 @@ jobs:
         prerelease: true
         title: "Development Build"
         files: |
-          ${{github.workspace}}/build/OxArena/Release/OxArena.exe
+          ${{github.workspace}}\build\OxArena\Release\OxArena.exe
 
   #mac_clang:
   #  runs-on: macos-latest

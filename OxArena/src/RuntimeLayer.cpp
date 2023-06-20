@@ -24,6 +24,8 @@ namespace OxylusRuntime {
     auto& style = ImGui::GetStyle();
     style.WindowMenuButtonPosition = ImGuiDir_Left;
 
+    m_RuntimeConsole.RenderMenuBar = false;
+
     dispatcher.sink<ReloadSceneEvent>().connect<&RuntimeLayer::OnSceneReload>(*this);
     LoadScene();
   }
@@ -38,12 +40,14 @@ namespace OxylusRuntime {
     RenderFinalImage();
     m_Scene->OnImGuiRender(Application::GetTimestep());
 
+    DrawRuntimeConsole();
+
     constexpr ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
                                               ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
                                               ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove;
     constexpr float PAD = 10.0f;
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
-    const ImVec2 work_pos = viewport->WorkPos; 
+    const ImVec2 work_pos = viewport->WorkPos;
     ImVec2 window_pos;
     window_pos.x = (work_pos.x + PAD);
     window_pos.y = work_pos.y + PAD;
@@ -84,8 +88,34 @@ namespace OxylusRuntime {
     ImGuiScoped::StyleVar style(ImGuiStyleVar_WindowPadding, ImVec2{});
     if (ImGui::Begin("FinalImage", nullptr, flags)) {
       ImGui::Image(m_Scene->GetRenderer().GetRenderPipeline()->GetFinalImage().GetDescriptorSet(),
-        ImVec2{(float)Window::GetWidth(), (float)Window::GetHeight()});
+                   ImVec2{(float)Window::GetWidth(), (float)Window::GetHeight()});
       ImGui::End();
+    }
+  }
+
+  void RuntimeLayer::DrawRuntimeConsole() {
+    if (ImGui::IsKeyPressed(ImGuiKey_GraveAccent, false)) {
+      m_RuntimeConsole.Visible = !m_RuntimeConsole.Visible;
+    }
+    static float s_AnimationCounter = 0;
+    if (m_RuntimeConsole.Visible) {
+      if (s_AnimationCounter >= 0.4f)
+        s_AnimationCounter = 0.4f;
+      else
+        s_AnimationCounter += Application::GetTimestep() * 3.0f;
+      ImGui::SetNextWindowPos(ImGui::GetMainViewport()->WorkPos, ImGuiCond_Always);
+      ImGui::SetNextWindowSize({ImGui::GetMainViewport()->WorkSize.x, ImGui::GetMainViewport()->WorkSize.y * s_AnimationCounter}, ImGuiCond_Always);
+      constexpr ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoDecoration |
+                                               ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse;
+      ImGuiScoped::StyleColor col1(ImGuiCol_FrameBg, ImVec4(0.000f, 0.000f, 0.000f, 1.000f));
+      ImGuiScoped::StyleColor col2(ImGuiCol_WindowBg, ImVec4(0.000f, 0.000f, 0.000f, 0.784f));
+      ImGuiScoped::StyleColor col3(ImGuiCol_MenuBarBg, ImVec4(0.100f, 0.100f, 0.100f, 1.000f));
+      m_RuntimeConsole.OnImGuiRender(windowFlags);
+      m_BlockingPlayerInput = true;
+    }
+    else {
+      s_AnimationCounter = 0.0f;
+      m_BlockingPlayerInput = false;
     }
   }
 }
