@@ -18,11 +18,12 @@ namespace Oxylus {
     spec.CommandLineArgs = args;
     spec.CustomWindowTitle = false;
     spec.UseImGui = true;
+    spec.ResourcesPath = "Assets";
 
     const auto app = new OxylusRuntime(spec);
-    app->PushLayer(new ::OxylusRuntime::RuntimeLayer());
+    app->PushLayer(new ::OxArena::RuntimeLayer());
     app->GetSystemManager()
-        .AddSystem<HotReloadableScenes>(::OxylusRuntime::RuntimeLayer::GetAssetsPath("Scenes/Main.oxscene"));
+        .AddSystem<HotReloadableScenes>(::OxArena::RuntimeLayer::GetAssetsPath("Scenes/Main.oxscene"));
 
     return app;
   }

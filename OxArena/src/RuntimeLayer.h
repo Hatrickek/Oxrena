@@ -7,10 +7,11 @@
 #include "Scene/Scene.h"
 #include "UI/RuntimeConsole.h"
 
-namespace OxylusRuntime {
+namespace OxArena {
   class RuntimeLayer : public Oxylus::Layer {
   public:
     bool m_BlockingPlayerInput = false;
+    bool m_FreeCamera = false;
 
     RuntimeLayer();
     ~RuntimeLayer() override;
@@ -28,8 +29,6 @@ namespace OxylusRuntime {
   private:
     void LoadScene();
     bool OnSceneReload(Oxylus::ReloadSceneEvent& e);
-    void RenderFinalImage() const;
-    void DrawRuntimeConsole();
 
   private:
     static RuntimeLayer* s_Instance;

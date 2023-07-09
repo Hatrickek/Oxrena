@@ -1,9 +1,13 @@
 set(PROJECT_NAME OxArena)
 
 # Source groups
-file(GLOB_RECURSE src "src/*.h" "src/*.cpp")
-source_group("src" FILES ${src})
-set(ALL_FILES ${src})
+file(GLOB src_root "src/*.h" "src/*.cpp")
+source_group("src" FILES ${src_root})
+file(GLOB src_systems "src/Systems/*.h" "src/Systems/*.cpp")
+source_group("src/Systems" FILES ${src_systems})
+file(GLOB src_ui "src/UI/*.h" "src/UI/*.cpp")
+source_group("src/UI" FILES ${src_ui})
+set(ALL_FILES ${src_root} ${src_systems} ${src_ui})
 
 # Target
 add_executable(${PROJECT_NAME} ${ALL_FILES})
