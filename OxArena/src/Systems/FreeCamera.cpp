@@ -1,18 +1,29 @@
 #include "FreeCamera.h"
 #include <imgui.h>
 
+#include "RuntimeLayer.h"
+
 #include "Core/Components.h"
 #include "Core/Input.h"
 #include "Scene/Scene.h"
 #include "Utils/OxMath.h"
 #include "Utils/Timestep.h"
 
-namespace OxylusRuntime {
+namespace OxArena {
   using namespace Oxylus;
 
-  void FreeCamera::OnInit() { }
-
   void FreeCamera::OnUpdate(Scene* scene, Timestep deltaTime) {
+    if (!*m_UseCamera) {
+      if (m_BlockPlayerInput) {
+        RuntimeLayer::Get()->m_BlockingPlayerInput = false;
+        m_BlockPlayerInput = false;
+      }
+      return;
+    }
+
+    RuntimeLayer::Get()->m_BlockingPlayerInput = true;
+    m_BlockPlayerInput = true;
+
     auto& registery = scene->m_Registry;
     const auto group = registery.view<TransformComponent, CameraComponent>();
     for (const auto entity : group) {
@@ -27,8 +38,8 @@ namespace OxylusRuntime {
         ImGui::SetMouseCursor(ImGuiMouseCursor_None);
         const glm::vec2 newMousePosition = Input::GetMousePosition();
 
-        if (!m_UsingEditorCamera) {
-          m_UsingEditorCamera = true;
+        if (!m_UsingCamera) {
+          m_UsingCamera = true;
           m_LockedMousePosition = newMousePosition;
         }
 
@@ -56,7 +67,7 @@ namespace OxylusRuntime {
         }
       }
       else {
-        m_UsingEditorCamera = false;
+        m_UsingCamera = false;
       }
 
       const glm::vec3 dampedPosition = Math::SmoothDamp(position,

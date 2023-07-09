@@ -30,6 +30,15 @@ namespace OxArena {
     style.WindowMenuButtonPosition = ImGuiDir_Left;
 
     m_RuntimeConsole.RenderMenuBar = false;
+    m_RuntimeConsole.Visible = false;
+    m_RuntimeConsole.SetFocusToKeyboardAlways = true;
+    m_RuntimeConsole.RegisterCommand("ssao",
+      fmt::format("ssao {}", RendererConfig::Get()->SSAOConfig.Enabled),
+      [] {
+        RendererConfig::Get()->SSAOConfig.Enabled = !RendererConfig::Get()->SSAOConfig.Enabled;
+        RendererConfig::Get()->ConfigChangeDispatcher.trigger<RendererConfig::ConfigChangeEvent>();
+      });
+    m_RuntimeConsole.RegisterCommand("free_camera", fmt::format("free_camera {0}", m_FreeCamera), &m_FreeCamera);
 
     dispatcher.sink<ReloadSceneEvent>().connect<&RuntimeLayer::OnSceneReload>(*this);
     LoadScene();

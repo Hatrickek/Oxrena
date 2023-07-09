@@ -1,12 +1,14 @@
 #pragma once
-#include "Core/Base.h"
-#include "Core/Systems/System.h"
-#include "Render/Camera.h"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
-namespace OxylusRuntime {
+#include "Core/Systems/System.h"
+
+namespace OxArena {
   class FreeCamera : public Oxylus::System {
   public:
-    void OnInit() override;
+    FreeCamera(const bool* use) : m_UseCamera(use) { }
+
     void OnUpdate(Oxylus::Scene* scene, Oxylus::Timestep deltaTime) override;
 
   private:
@@ -16,8 +18,9 @@ namespace OxylusRuntime {
     bool m_SmoothCamera = true;
     float m_MouseSensitivity = 0.5f;
     float m_MovementSpeed = 5.0f;
-    bool m_UseEditorCamera = true;
-    bool m_UsingEditorCamera = false;
+    bool m_UsingCamera = false;
+    const bool* m_UseCamera = nullptr;
+    bool m_BlockPlayerInput = false;
     glm::vec2 m_LockedMousePosition = glm::vec2(0.0f);
     glm::vec3 m_TranslationVelocity = glm::vec3(0);
     glm::vec2 m_RotationVelocity = glm::vec2(0);

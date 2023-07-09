@@ -5,7 +5,7 @@
 #include "Scene/Scene.h"
 #include "UI/IGUI.h"
 
-namespace OxylusRuntime {
+namespace OxArena {
   using namespace Oxylus;
 
   // Temporary globals
@@ -128,6 +128,7 @@ namespace OxylusRuntime {
         }
 
         // Move the character.
+        OX_CORE_ASSERT(!chComponent.CurrentVelocity.IsNaN())
         chComponent.Character->SetLinearVelocity(chComponent.CurrentVelocity);
       }
     }
@@ -135,19 +136,21 @@ namespace OxylusRuntime {
 
   void CharacterSystem::OnImGuiRender(Scene* scene, Timestep deltaTime) {
     auto& registery = scene->m_Registry;
-    const auto characterView = registery.view<TransformComponent, CharacterControllerComponent>();
+    const auto characterView = registery.view<TransformComponent, CharacterControllerComponent, CharacterComponent>();
     for (const auto entity : characterView) {
-      auto&& [transform, component] = characterView.get<TransformComponent, CharacterControllerComponent>(entity);
+      auto&& [transform, component, ch] = characterView.get<TransformComponent, CharacterControllerComponent, CharacterComponent>(entity);
 
       if (ImGui::Begin("Character Debug")) {
         IGUI::BeginProperties();
+        IGUI::Property("Health", ch.Health);
+        IGUI::Property("Armor", ch.Armor);
         IGUI::PropertyVector("Position", transform.Translation);
         IGUI::PropertyVector("Rotation", transform.Rotation);
         IGUI::Property("AutoBunnyHop", component.AutoBunnyHop);
         IGUI::Property("JumpForce", component.JumpForce, 1.0f, 10.0f);
         IGUI::Property("CollisionTolerance", component.CollisionTolerance, 0.05f, 0.5f);
 
-        auto velocity = glm::make_vec3(component.Character->GetLinearVelocity().mF32);
+        auto velocity = glm::make_vec3(component.CurrentVelocity.mF32);
         auto speed = component.Character->GetLinearVelocity().Length();
         IGUI::Text("IsGrounded", fmt::format("{}", component.Character->IsSupported()).c_str());
         IGUI::PropertyVector("Velocity", velocity);
