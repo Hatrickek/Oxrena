@@ -67,9 +67,41 @@ namespace OxArena {
     const SceneSerializer serializer(m_Scene);
     serializer.Deserialize(GetAssetsPath("Scenes/Main.oxscene"));
 
+    // Scene components
+    auto& registery = m_Scene->m_Registry;
+    const auto chView = registery.view<CharacterControllerComponent>();
+    for (const auto entity : chView) {
+      Entity{entity, m_Scene.get()}.AddComponent<CharacterComponent>();
+    }
+
+    // Custom components
+    const auto customView = registery.view<CustomComponent>();
+    for (const auto entity : customView) {
+      auto& component = customView.get<CustomComponent>(entity);
+      if (component.Name == "HealthPickup") {
+        auto& c = Entity{entity, m_Scene.get()}.AddComponent<HealthPickupComponent>();
+        c.Value = std::stoi(component.Fields[0].Value);
+      }
+      else if (component.Name == "ArmorPickup") {
+        auto& c = Entity{entity, m_Scene.get()}.AddComponent<ArmorPickupComponent>();
+        c.Value = std::stoi(component.Fields[0].Value);
+      }
+      else if (component.Name == "ShotgunComponent") {
+        auto& c = Entity{entity, m_Scene.get()}.AddComponent<ShotgunComponent>();
+        c.Damage = std::stoi(component.Fields[0].Value);
+      }
+      else if (component.Name == "WeaponPickup") {
+        auto& c = Entity{entity, m_Scene.get()}.AddComponent<WeaponPickupComponent>();
+        if (component.Fields[0].Value == "Shotgun")
+          c.Type = WeaponType::SHOTGUN;
+      }
+    }
+
     m_Scene->OnRuntimeStart();
 
-    m_Scene->AddSystem<CharacterSystem>();
+    m_Scene->AddSystem<FreeCamera>(&m_FreeCamera)
+           ->AddSystem<CharacterSystem>()
+           ->AddSystem<PickupSystem>();
   }
 
   bool RuntimeLayer::OnSceneReload(ReloadSceneEvent&) {
