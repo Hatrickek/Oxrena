@@ -1,11 +1,12 @@
 #include "UI.h"
 
-#include <imgui.h>
+#include <UI/OxUI.h>
 #include <Render/Window.h>
 #include <Scene/Scene.h>
 
 #include <UI/RuntimeConsole.h>
 #include <Utils/ImGuiScoped.h>
+
 
 namespace OxArena {
   using namespace Oxylus;
@@ -25,8 +26,7 @@ namespace OxArena {
                            ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
                            ImGuiWindowFlags_NoBackground;
     ImGuiScoped::StyleVar style(ImGuiStyleVar_WindowPadding, ImVec2{});
-    const auto center = ImGui::GetMainViewport()->GetCenter();
-    ImGui::SetNextWindowPos(center, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+    OxUI::CenterNextWindow();
     if (ImGui::Begin("Crosshair", nullptr, flags)) {
       ImGui::Image(s_UIResources.CrosshairA->GetDescriptorSet(), ImVec2{32.0f, 32.0f});
       ImGui::End();

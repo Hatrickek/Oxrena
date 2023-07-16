@@ -2,7 +2,6 @@
 
 #include <imgui.h>
 #include <Scene/SceneSerializer.h>
-#include <entt.hpp>
 
 #include <Render/RendererConfig.h>
 
