@@ -1,5 +1,11 @@
 # Prerequisites
 *.d
+*.bat
+*.dll
+*.cmake
+*.toml
+*.cap
+*.ini
 
 # Compiled Object files
 *.slo
@@ -23,6 +29,7 @@
 *.la
 *.a
 *.lib
+*.pdb
 
 # Executables
 *.exe
@@ -40,6 +47,7 @@
 /bin-int
 /.cache
 /OxylusEditor/Resources/Shaders/Compiled
+/OxylusEditor/SandboxProject
 /OxylusEditor/logs
 *.ccls
 *.vcxproj
@@ -52,3 +60,16 @@ Build
 *.sln.DotSettings.user
 .editorconfig
 CMakeSettings.json
+/logs
+/cmake-build-debug-visual-studio
+/cmake-build-release-visual-studio
+CMakeLists.txt
+.clangd
+
+# xmake
+.xmake
+compile_commands.json
+.run
+/vsxmake2022
+
+.DS_Store
