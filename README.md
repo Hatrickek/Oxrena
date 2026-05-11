@@ -6,5 +6,5 @@ This project is more of a tech demo for Oxylus than a real game. We test our lat
 TODO
 
 ## Building
-xmake f -c -v
-xmake r
+- xmake f -c -v
+- xmake r

@@ -1,30 +1,22 @@
-#include <Core/EntryPoint.h>
-#include <Core/Systems/HotReloadableScenes.h>
+#include <Core/App.hpp>
+#include <Core/DefaultModules.hpp>
 
-#include "OxrenaLayer.h"
+#include "Game.hpp"
 
-#include "Core/Systems/SystemManager.h"
+int main(int argc, char** argv) {
+  auto app = ox::App(argc, argv);
+  app.with_name("Oxrena")
+    .with_window({
+      .title = "Oxrena",
+      .icon = {},
+      .width = 1720,
+      .height = 900,
+      .flags = ox::WindowFlag::Centered | ox::WindowFlag::Resizable | ox::WindowFlag::HighPixelDensity,
+    })
+    .with_assets_directory("Assets")
+    .with(ox::DefaultModules{})
+    .with<oxrena::Game>()
+    .run();
 
-namespace Oxylus {
-class OxrenaApp : public Application {
-public:
-  OxrenaApp(const AppSpec& spec) : Application(spec) { }
-};
-
-Application* create_application(const ApplicationCommandLineArgs args) {
-  AppSpec spec;
-  spec.name = "Oxrena";
-  spec.working_directory = std::filesystem::current_path().string();
-  spec.command_line_args = args;
-  spec.resources_path = "Assets";
-  spec.device_index = 0; // TODO: Make sure it's the discrete gpu if available.
-
-  const auto app = new OxrenaApp(spec);
-  app->push_layer(new Oxrena::OxrenaLayer());
-  app->get_system_manager()
-     ->add_system<HotReloadableScenes>(
-       Oxrena::OxrenaLayer::get_assets_path("Scenes/Main.oxscene"));
-
-  return app;
-}
+  return 0;
 }
